@@ -8,11 +8,30 @@ def main():
         path_to_read_data=settings.PATH_TO_READ_DATA
     )
     plotting.plot_amount_and_time_distribution(
-        df=df,
-        output_path=settings.OUT_PUT_PATH
+        amount_val=df["Amount"].values,
+        time_val=df["Time"].values,
+        output_path=settings.OUT_PUT_PATH,
+        plot_title="amount_and_time_density.png"
+    )
+    df = preprocessing.make_robust_scaler(
+        df=df
+    )
+    plotting.plot_amount_and_time_distribution(
+        amount_val=df["scaled_amount"].values,
+        time_val=df["scaled_time"].values,
+        output_path=settings.OUT_PUT_PATH,
+        plot_title="scaled_amount_and_time_density.png"
     )
 
-    print(df["Amount"].values)
+    df = preprocessing.drop_unnecessary_columns(
+        df=df
+    )
+    original_Xtrain, original_Xtest, original_ytrain, original_ytest = preprocessing.make_stratified_split(
+        df=df,
+        stratified_splits=settings.STRATIFIED_SPLITS
+    )
+
+    print(original_Xtrain)
 
 
 if __name__ == '__main__':
