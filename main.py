@@ -30,8 +30,12 @@ def main():
         df=df,
         stratified_splits=settings.STRATIFIED_SPLITS
     )
+    preprocessing.check_target_distribution(
+        original_ytrain=original_ytrain,
+        original_ytest=original_ytest
+    )
 
-    print(original_Xtrain)
+    # print(original_Xtrain)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.preprocessing import RobustScaler
 from sklearn.model_selection import StratifiedKFold
+import numpy as np
 
 
 def read_data_as_data_frame(path_to_read_data):
@@ -41,4 +42,13 @@ def make_stratified_split(df, stratified_splits):
         original_ytrain, original_ytest = y.iloc[train_index], y.iloc[test_index]
 
     return original_Xtrain, original_Xtest, original_ytrain, original_ytest
+
+
+def check_target_distribution(original_ytrain, original_ytest):
+    train_unique_label, train_counts_label = np.unique(original_ytrain, return_counts=True)
+    test_unique_label, test_counts_label = np.unique(original_ytest, return_counts=True)
+
+    print("Label Distribution: \n")
+    print(train_counts_label/len(original_ytrain))
+    print(test_counts_label/len(original_ytest))
 
