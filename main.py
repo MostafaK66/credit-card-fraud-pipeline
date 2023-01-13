@@ -45,6 +45,15 @@ def main():
         df_new=df_new,
         output_path=settings.OUT_PUT_PATH
     )
+    plotting.plot_box_plot_neg_corr(
+        df_new=df_new,
+        output_path=settings.OUT_PUT_PATH
+    )
+
+    plotting.plot_box_plot_pos_corr(
+        df_new=df_new,
+        output_path=settings.OUT_PUT_PATH
+    )
 
     # print(normal_distributed_df.head())
     # print(df_new.head())

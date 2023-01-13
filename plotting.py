@@ -32,3 +32,38 @@ def plot_heat_map_for_data(df, df_new, output_path):
 
     plt.savefig(os.path.join(output_path, "heatmap.png"))
 
+
+def plot_box_plot_neg_corr(df_new, output_path):
+    fig, ax = plt.subplots(nrows=1, ncols=4, figsize=(18, 4))
+
+    sns.boxplot(x="Class", y="V17", data=df_new, ax=ax[0])
+    ax[0].set_title("V17 vs Class - Negative Correlation")
+
+    sns.boxplot(x="Class", y="V14", data=df_new, ax=ax[1])
+    ax[1].set_title("V14 vs Class - Negative Correlation")
+
+    sns.boxplot(x="Class", y="V12", data=df_new, ax=ax[2])
+    ax[2].set_title("V12 vs Class - Negative Correlation")
+
+    sns.boxplot(x="Class", y="V10", data=df_new, ax=ax[3])
+    ax[3].set_title("V10 vs Class - Negative Correlation")
+
+    plt.savefig(os.path.join(output_path, "boxplot_neg_corr.png"))
+
+
+def plot_box_plot_pos_corr(df_new, output_path):
+    fig, ax = plt.subplots(nrows=1, ncols=4, figsize=(18, 4))
+
+    sns.boxplot(x="Class", y="V11", data=df_new, ax=ax[0])
+    ax[0].set_title("V11 vs Class - Positive Correlation")
+
+    sns.boxplot(x="Class", y="V4", data=df_new, ax=ax[1])
+    ax[1].set_title("V4 vs Class - Positive Correlation")
+
+    sns.boxplot(x="Class", y="V2", data=df_new, ax=ax[2])
+    ax[2].set_title("V2 vs Class - Positive Correlation")
+
+    sns.boxplot(x="Class", y="V19", data=df_new, ax=ax[3])
+    ax[3].set_title("V19 vs Class - Positive Correlation")
+
+    plt.savefig(os.path.join(output_path, "boxplot_pos_corr.png"))
