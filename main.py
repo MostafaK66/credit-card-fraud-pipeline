@@ -37,9 +37,17 @@ def main():
     normal_distributed_df, df_new = preprocessing.make_sub_sample_data_frame(
         df=df
     )
+    preprocessing.check_target_distribution_sample_data_frame(
+        df_new=df_new
+    )
+    plotting.plot_heat_map_for_data(
+        df=df,
+        df_new=df_new,
+        output_path=settings.OUT_PUT_PATH
+    )
 
-    print(normal_distributed_df.head())
-    print(df_new.head())
+    # print(normal_distributed_df.head())
+    # print(df_new.head())
 
 
 if __name__ == '__main__':

@@ -61,3 +61,9 @@ def make_sub_sample_data_frame(df):
     df_new = normal_distributed_df.sample(frac=1, random_state=123)
 
     return normal_distributed_df, df_new
+
+
+def check_target_distribution_sample_data_frame(df_new):
+    print("Distribution of the classes in the subsample dataset:")
+    print(df_new["Class"].value_counts()/len(df_new))
+
