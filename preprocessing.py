@@ -52,3 +52,12 @@ def check_target_distribution(original_ytrain, original_ytest):
     print(train_counts_label/len(original_ytrain))
     print(test_counts_label/len(original_ytest))
 
+
+def make_sub_sample_data_frame(df):
+    fraud_df = df.loc[df["Class"] == 1]
+    non_fraud_df = df.loc[df["Class"] == 0][:492]
+
+    normal_distributed_df = pd.concat([fraud_df, non_fraud_df])
+    df_new = normal_distributed_df.sample(frac=1, random_state=123)
+
+    return normal_distributed_df, df_new

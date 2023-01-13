@@ -34,8 +34,12 @@ def main():
         original_ytrain=original_ytrain,
         original_ytest=original_ytest
     )
+    normal_distributed_df, df_new = preprocessing.make_sub_sample_data_frame(
+        df=df
+    )
 
-    # print(original_Xtrain)
+    print(normal_distributed_df.head())
+    print(df_new.head())
 
 
 if __name__ == '__main__':
