@@ -67,3 +67,17 @@ def check_target_distribution_sample_data_frame(df_new):
     print("Distribution of the classes in the subsample dataset:")
     print(df_new["Class"].value_counts()/len(df_new))
 
+
+def make_outlier_removal(df_new, column_name):
+    V_fraud = df_new[column_name].loc[df_new["Class"] == 1].values
+    q25, q75 = np.percentile(V_fraud, 25), np.percentile(V_fraud, 75)
+    V_iqr = q75 - q25
+
+    V_cut_off = V_iqr * 1.5
+    V_lower, V_upper = q25 - V_cut_off, q75 + V_cut_off
+    outliers_to_remove = [x for x in V_fraud if x < V_lower or x > V_upper]
+
+    df_new = df_new.drop(df_new[(df_new[column_name] > V_upper) | (df_new[column_name] < V_lower)].index)
+
+    return df_new, outliers_to_remove
+

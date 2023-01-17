@@ -59,9 +59,24 @@ def main():
         df_new=df_new,
         output_path=settings.OUT_PUT_PATH
     )
+    df_new, outliers_to_remove_V14 = preprocessing.make_outlier_removal(
+        df_new=df_new,
+        column_name="V14"
+    )
+    df_new, outliers_to_remove_V12 = preprocessing.make_outlier_removal(
+        df_new=df_new,
+        column_name="V12"
+    )
+
+    df_new, outliers_to_remove_V10 = preprocessing.make_outlier_removal(
+        df_new=df_new,
+        column_name="V10"
+    )
 
     # print(normal_distributed_df.head())
-    # print(df_new.head())
+    print(outliers_to_remove_V14)
+    print(outliers_to_remove_V12)
+    print(outliers_to_remove_V10)
 
 
 if __name__ == '__main__':
