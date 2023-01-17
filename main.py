@@ -55,6 +55,11 @@ def main():
         output_path=settings.OUT_PUT_PATH
     )
 
+    plotting.plot_distribution_neg_corr(
+        df_new=df_new,
+        output_path=settings.OUT_PUT_PATH
+    )
+
     # print(normal_distributed_df.head())
     # print(df_new.head())
 

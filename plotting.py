@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy.stats import norm
 import os
 
 
@@ -67,3 +68,23 @@ def plot_box_plot_pos_corr(df_new, output_path):
     ax[3].set_title("V19 vs Class - Positive Correlation")
 
     plt.savefig(os.path.join(output_path, "boxplot_pos_corr.png"))
+
+
+def plot_distribution_neg_corr(df_new, output_path):
+    fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(20, 6))
+
+    v14_fraud_list = df_new["V14"].loc[df_new["Class"] == 1].values
+    sns.histplot(v14_fraud_list, stat="count", ax=ax[0], color="#FB8861")
+    ax[0].set_title("V14 Distribution \n (Fraud Transaction)", fontsize=14)
+
+    V12_fraud_dist = df_new["V12"].loc[df_new["Class"] == 1].values
+    sns.histplot(V12_fraud_dist, stat="count", ax=ax[1], color="#56F9BB")
+    ax[1].set_title("V12 Distribution \n (Fraud Transaction)", fontsize=14)
+
+    V10_fraud_dist = df_new["V10"].loc[df_new["Class"] == 1].values
+    sns.histplot(V10_fraud_dist, stat="count", ax=ax[2], color="#C5B3F9")
+    ax[2].set_title("V10 Distribution \n (Fraud Transaction)", fontsize=14)
+
+    plt.savefig(os.path.join(output_path, "dist_neg_err.png"))
+
+
