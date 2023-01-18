@@ -61,22 +61,31 @@ def main():
     )
     df_new, outliers_to_remove_V14 = preprocessing.make_outlier_removal(
         df_new=df_new,
+        outlier_thre=settings.OUTLIER_THRE,
         column_name="V14"
     )
     df_new, outliers_to_remove_V12 = preprocessing.make_outlier_removal(
         df_new=df_new,
+        outlier_thre=settings.OUTLIER_THRE,
         column_name="V12"
     )
 
     df_new, outliers_to_remove_V10 = preprocessing.make_outlier_removal(
         df_new=df_new,
+        outlier_thre=settings.OUTLIER_THRE,
         column_name="V10"
+    )
+    plotting.plot_box_plot_reducted_outliers(
+        df_new=df_new,
+        output_path=settings.OUT_PUT_PATH,
+        colors_box_plot=settings.COLORS_FOR_BOX_PLOT
     )
 
     # print(normal_distributed_df.head())
     print(outliers_to_remove_V14)
     print(outliers_to_remove_V12)
     print(outliers_to_remove_V10)
+    print(df_new.head())
 
 
 if __name__ == '__main__':

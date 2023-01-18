@@ -88,3 +88,22 @@ def plot_distribution_neg_corr(df_new, output_path):
     plt.savefig(os.path.join(output_path, "dist_neg_err.png"))
 
 
+def plot_box_plot_reducted_outliers(df_new, output_path, colors_box_plot):
+    fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(20, 6))
+
+    sns.boxplot(x="Class", y="V14", data=df_new, ax=ax[0], palette=colors_box_plot)
+    ax[0].set_title("V14 Feature \n Reduction of outliers", fontsize=14)
+    ax[0].annotate("Fewer extreme \n outliers", xy=(0.98, -17.5), xytext=(0, -12), arrowprops=dict(facecolor='black'))
+
+    sns.boxplot(x="Class", y="V12", data=df_new, ax=ax[1], palette=colors_box_plot)
+    ax[1].set_title("V12 Feature \n Reduction of outliers", fontsize=14)
+    ax[1].annotate("Fewer extreme \n outliers", xy=(0.98, -17.3), xytext=(0, -12), arrowprops=dict(facecolor='black'))
+
+    sns.boxplot(x="Class", y="V10", data=df_new, ax=ax[2], palette=colors_box_plot)
+    ax[2].set_title("V10 Feature \n Reduction of outliers", fontsize=14)
+    ax[2].annotate("Fewer extreme \n outliers", xy=(0.95, -16.5), xytext=(0, -12), arrowprops=dict(facecolor='black'))
+
+    plt.savefig(os.path.join(output_path, "boxplot_reducted_outliers.png"))
+
+
+
