@@ -1,6 +1,9 @@
 import preprocessing
 import settings
 import plotting
+import dimensionality_reductors as dim_reduct
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def main():
@@ -81,11 +84,21 @@ def main():
         colors_box_plot=settings.COLORS_FOR_BOX_PLOT
     )
 
-    # print(normal_distributed_df.head())
-    print(outliers_to_remove_V14)
-    print(outliers_to_remove_V12)
-    print(outliers_to_remove_V10)
-    print(df_new.head())
+    X_reduced_tsne = dim_reduct.make_tsne_dim_reductor(
+        df_new=df_new,
+        n_components=settings.NUM_COMPONENTS
+    )
+    X_reduced_pca = dim_reduct.make_pca_dim_reductor(
+        df_new=df_new,
+        n_components=settings.NUM_COMPONENTS
+    )
+
+    X_reduced_truncated_svd = dim_reduct.make_truncated_svd_dim_reductor(
+        df_new=df_new,
+        n_components=settings.NUM_COMPONENTS,
+        svd_algorithm=settings.SVD_ALGORITHM
+    )
+
 
 
 if __name__ == '__main__':
