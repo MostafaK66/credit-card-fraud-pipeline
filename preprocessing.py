@@ -2,11 +2,12 @@ import pandas as pd
 from sklearn.preprocessing import RobustScaler
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 
 def read_data_as_data_frame(path_to_read_data):
     df = pd.read_csv(path_to_read_data)
-    print("No Fraud", round(df["Class"].value_counts()[0]/len(df) * 100, 2), "% of dataset")
+    print("No Fraud", round(df["Class"].value_counts()[0] / len(df) * 100, 2), "% of dataset")
     print("Fraud", round(df["Class"].value_counts()[1] / len(df) * 100, 2), "% of dataset")
 
     return df
@@ -49,8 +50,8 @@ def check_target_distribution(original_ytrain, original_ytest):
     test_unique_label, test_counts_label = np.unique(original_ytest, return_counts=True)
 
     print("Label Distribution: \n")
-    print(train_counts_label/len(original_ytrain))
-    print(test_counts_label/len(original_ytest))
+    print(train_counts_label / len(original_ytrain))
+    print(test_counts_label / len(original_ytest))
 
 
 def make_sub_sample_data_frame(df):
@@ -65,7 +66,7 @@ def make_sub_sample_data_frame(df):
 
 def check_target_distribution_sample_data_frame(df_new):
     print("Distribution of the classes in the subsample dataset:")
-    print(df_new["Class"].value_counts()/len(df_new))
+    print(df_new["Class"].value_counts() / len(df_new))
 
 
 def make_outlier_removal(df_new, outlier_thre, column_name):
@@ -81,3 +82,12 @@ def make_outlier_removal(df_new, outlier_thre, column_name):
 
     return df_new, outliers_to_remove
 
+
+def make_train_and_test_split(df_new, train_test_split_ration):
+    X = df_new.drop("Class", axis=1)
+    y = df_new["Class"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=train_test_split_ration, random_state=123)
+    X_train, X_test, y_train, y_test = X_train.values, X_test.values, y_train.values, y_test.values
+
+    return X_train, X_test, y_train, y_test

@@ -106,6 +106,11 @@ def main():
         output_path=settings.OUT_PUT_PATH
     )
 
+    X_train, X_test, y_train, y_test = preprocessing.make_train_and_test_split(
+        df_new=df_new,
+        train_test_split_ration=settings.TRAIN_TEST_SPLIT_RATIO
+    )
+
 
 if __name__ == '__main__':
     main()
