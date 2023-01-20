@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy.stats import norm
+import matplotlib.patches as mpatches
 import os
 
 
@@ -104,6 +104,46 @@ def plot_box_plot_reducted_outliers(df_new, output_path, colors_box_plot):
     ax[2].annotate("Fewer extreme \n outliers", xy=(0.95, -16.5), xytext=(0, -12), arrowprops=dict(facecolor='black'))
 
     plt.savefig(os.path.join(output_path, "boxplot_reducted_outliers.png"))
+
+
+def plot_scatter_dim_reduction(X_reduced_tsne, X_reduced_pca, X_reduced_truncated_svd, y, output_path):
+    fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(20, 6))
+    fig.suptitle("Clustering using Dimensionality Reduction", fontsize=14)
+
+    blue_patch = mpatches.Patch(color="#0A0AFF", label="No Fraud")
+    red_patch = mpatches.Patch(color="#AF0000", label="Fraud")
+
+    ax[0].scatter(
+        X_reduced_tsne[:, 0], X_reduced_tsne[:, 1], c=(y == 0), cmap="coolwarm", label="No Fraud", linewidth=2
+    )
+    ax[0].scatter(
+        X_reduced_tsne[:, 0], X_reduced_tsne[:, 1], c=(y == 1), cmap="coolwarm", label="Fraud", linewidth=2
+    )
+    ax[0].set_title("t-SNE", fontsize=14)
+    ax[0].grid(True)
+    ax[0].legend(handles=[blue_patch, red_patch])
+
+    ax[1].scatter(
+        X_reduced_tsne[:, 0], X_reduced_pca[:, 1], c=(y == 0), cmap="coolwarm", label="No Fraud", linewidth=2
+    )
+    ax[1].scatter(
+        X_reduced_tsne[:, 0], X_reduced_pca[:, 1], c=(y == 1), cmap="coolwarm", label="Fraud", linewidth=2
+    )
+    ax[1].set_title("PCA", fontsize=14)
+    ax[1].grid(True)
+    ax[1].legend(handles=[blue_patch, red_patch])
+
+    ax[2].scatter(
+        X_reduced_tsne[:, 0], X_reduced_truncated_svd[:, 1], c=(y == 0), cmap="coolwarm", label="No Fraud", linewidth=2
+    )
+    ax[2].scatter(
+        X_reduced_tsne[:, 0], X_reduced_truncated_svd[:, 1], c=(y == 1), cmap="coolwarm", label="Fraud", linewidth=2
+    )
+    ax[2].set_title("Truncated SVD", fontsize=14)
+    ax[2].grid(True)
+    ax[2].legend(handles=[blue_patch, red_patch])
+
+    plt.savefig(os.path.join(output_path, "scatter_dim_reduc.png"))
 
 
 

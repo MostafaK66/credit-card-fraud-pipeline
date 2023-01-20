@@ -84,7 +84,7 @@ def main():
         colors_box_plot=settings.COLORS_FOR_BOX_PLOT
     )
 
-    X_reduced_tsne = dim_reduct.make_tsne_dim_reductor(
+    X_reduced_tsne, y = dim_reduct.make_tsne_dim_reductor(
         df_new=df_new,
         n_components=settings.NUM_COMPONENTS
     )
@@ -98,7 +98,13 @@ def main():
         n_components=settings.NUM_COMPONENTS,
         svd_algorithm=settings.SVD_ALGORITHM
     )
-
+    plotting.plot_scatter_dim_reduction(
+        X_reduced_tsne=X_reduced_tsne,
+        X_reduced_pca=X_reduced_pca,
+        X_reduced_truncated_svd=X_reduced_truncated_svd,
+        y=y,
+        output_path=settings.OUT_PUT_PATH
+    )
 
 
 if __name__ == '__main__':
