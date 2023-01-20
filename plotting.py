@@ -105,6 +105,5 @@ def plot_box_plot_reducted_outliers(df_new, output_path, colors_box_plot):
 
     plt.savefig(os.path.join(output_path, "boxplot_reducted_outliers.png"))
 
-def plot():
-    \pass
+
 
