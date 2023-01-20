@@ -2,6 +2,7 @@ import preprocessing
 import settings
 import plotting
 import dimensionality_reductors as dim_reduct
+import classifiers
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -109,6 +110,12 @@ def main():
     X_train, X_test, y_train, y_test = preprocessing.make_train_and_test_split(
         df_new=df_new,
         train_test_split_ration=settings.TRAIN_TEST_SPLIT_RATIO
+    )
+    classifiers.make_base_fraud_detector_classifiers(
+        dict_classifiers=settings.dict_classifiers,
+        X_train=X_train,
+        y_train=y_train,
+        num_cross_val=settings.NUM_CROSS_VAL
     )
 
 
