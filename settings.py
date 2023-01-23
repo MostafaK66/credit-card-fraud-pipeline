@@ -4,6 +4,7 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+
 PATH_TO_READ_DATA = "/Users/mostafa_mac/Desktop/kaggle_datasets/creditcard.csv"
 OUT_PUT_PATH = os.path.join(os.getcwd(), "output")
 STRATIFIED_SPLITS = 5
@@ -20,3 +21,8 @@ dict_classifiers = {
     "RandomForestClassifier": RandomForestClassifier()
 }
 NUM_CROSS_VAL = 5
+log_reg_params = {"penalty": ["l1", "l2"], "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]}
+knears_params = {"n_neighbors": list(range(2, 5, 1)), 'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']}
+svc_params = {'C': [0.5, 0.7, 0.9, 1], 'kernel': ['rbf', 'poly', 'sigmoid', 'linear']}
+tree_params = {"criterion": ["gini", "entropy"], "max_depth": list(range(2, 4, 1)),
+               "min_samples_leaf": list(range(5, 7, 1))}

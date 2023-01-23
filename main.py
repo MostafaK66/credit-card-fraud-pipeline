@@ -4,10 +4,17 @@ import plotting
 import dimensionality_reductors as dim_reduct
 import classifiers
 import warnings
+import time
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+
 warnings.filterwarnings("ignore")
 
 
 def main():
+    time_start = time.time()
     df = preprocessing.read_data_as_data_frame(
         path_to_read_data=settings.PATH_TO_READ_DATA
     )
@@ -117,6 +124,33 @@ def main():
         y_train=y_train,
         num_cross_val=settings.NUM_CROSS_VAL
     )
+    log_classifier = classifiers.make_classifier_with_grid_search(
+        X_train=X_train,
+        y_train=y_train,
+        classifier_name=LogisticRegression(),
+        classifier_params=settings.log_reg_params
+    )
+    knears_classifier = classifiers.make_classifier_with_grid_search(
+        X_train=X_train,
+        y_train=y_train,
+        classifier_name=KNeighborsClassifier(),
+        classifier_params=settings.knears_params
+    )
+    svc_classifier = classifiers.make_classifier_with_grid_search(
+        X_train=X_train,
+        y_train=y_train,
+        classifier_name=SVC(),
+        classifier_params=settings.svc_params
+    )
+    tree_classifier = classifiers.make_classifier_with_grid_search(
+        X_train=X_train,
+        y_train=y_train,
+        classifier_name=DecisionTreeClassifier(),
+        classifier_params=settings.tree_params
+    )
+    print(tree_classifier)
+    time_end = time.time()
+    print(f"Total running time: {time_end - time_start}")
 
 
 if __name__ == '__main__':
