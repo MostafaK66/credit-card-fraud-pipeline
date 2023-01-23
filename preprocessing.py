@@ -91,3 +91,18 @@ def make_train_and_test_split(df_new, train_test_split_ration):
     X_train, X_test, y_train, y_test = X_train.values, X_test.values, y_train.values, y_test.values
 
     return X_train, X_test, y_train, y_test
+
+
+def make_train_test_split_main_df(df, stratified_splits):
+    under_sample_X = df.drop("Class", axis=1)
+    under_sample_y = df["Class"]
+    stratified_spliter = StratifiedKFold(n_splits=stratified_splits, random_state=None, shuffle=False)
+
+    for train_index, test_index in stratified_spliter.split(under_sample_X, under_sample_y):
+        print("Train:", train_index, "Test:", test_index)
+        under_sample_train_X, under_sample_test_X = under_sample_X.iloc[train_index].values, \
+                                                    under_sample_X.iloc[test_index].values
+        under_sample_train_y, under_sample_test_y = under_sample_y.iloc[train_index].values, \
+                                                    under_sample_y.iloc[test_index].values
+
+        return under_sample_train_X, under_sample_test_X, under_sample_train_y, under_sample_test_y

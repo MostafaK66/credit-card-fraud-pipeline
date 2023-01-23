@@ -148,7 +148,19 @@ def main():
         classifier_name=DecisionTreeClassifier(),
         classifier_params=settings.tree_params
     )
-    print(tree_classifier)
+    preprocessing.make_train_test_split_main_df(
+        df=df,
+        stratified_splits=settings.STRATIFIED_SPLITS
+    )
+    under_sample_train_X, under_sample_test_X, under_sample_train_y, under_sample_test_y =\
+        preprocessing.make_train_test_split_main_df(
+            df=df,
+            stratified_splits=settings.STRATIFIED_SPLITS
+        )
+    print(len(under_sample_train_X))
+    print(len(under_sample_test_X))
+    print(len(under_sample_train_y))
+    print(len(under_sample_test_y))
     time_end = time.time()
     print(f"Total running time: {time_end - time_start}")
 
