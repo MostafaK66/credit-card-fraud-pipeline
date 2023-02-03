@@ -3,6 +3,7 @@ from sklearn.model_selection import ShuffleSplit
 
 
 def make_learning_curve(model_cls, df_new, num_split_cv, train_test_split_ratio, train_sizes_learning_curve):
+    df_new = df_new.iloc[0:1000, :]
     X = df_new.drop("Class", axis=1)
     y = df_new["Class"]
     cv = ShuffleSplit(n_splits=num_split_cv, test_size=train_test_split_ratio, random_state=123)

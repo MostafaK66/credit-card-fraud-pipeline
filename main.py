@@ -2,6 +2,7 @@ import preprocessing
 import settings
 import plotting
 import dimensionality_reductors as dim_reduct
+import model_validation as mv
 import classifiers
 import warnings
 import time
@@ -124,25 +125,25 @@ def main():
         y_train=y_train,
         num_cross_val=settings.NUM_CROSS_VAL
     )
-    log_classifier = classifiers.make_classifier_with_grid_search(
+    log_classifier_params, log_classifier = classifiers.make_classifier_with_grid_search(
         X_train=X_train,
         y_train=y_train,
         classifier_name=LogisticRegression(),
         classifier_params=settings.log_reg_params
     )
-    knears_classifier = classifiers.make_classifier_with_grid_search(
+    knears_classifier_params, knears_classifier = classifiers.make_classifier_with_grid_search(
         X_train=X_train,
         y_train=y_train,
         classifier_name=KNeighborsClassifier(),
         classifier_params=settings.knears_params
     )
-    svc_classifier = classifiers.make_classifier_with_grid_search(
+    svc_classifier_params, svc_classifier = classifiers.make_classifier_with_grid_search(
         X_train=X_train,
         y_train=y_train,
         classifier_name=SVC(),
         classifier_params=settings.svc_params
     )
-    tree_classifier = classifiers.make_classifier_with_grid_search(
+    tree_classifier_params, tree_classifier = classifiers.make_classifier_with_grid_search(
         X_train=X_train,
         y_train=y_train,
         classifier_name=DecisionTreeClassifier(),
@@ -157,10 +158,37 @@ def main():
             df=df,
             stratified_splits=settings.STRATIFIED_SPLITS
         )
-    print(len(under_sample_train_X))
-    print(len(under_sample_test_X))
-    print(len(under_sample_train_y))
-    print(len(under_sample_test_y))
+    train_sizes_lr, train_scores_lr, test_scores_lr = mv.make_learning_curve(
+        model_cls=log_classifier,
+        df_new=df_new,
+        num_split_cv=settings.NUM_SPLIT_CV,
+        train_test_split_ratio=settings.TRAIN_TEST_SPLIT_RATIO,
+        train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
+    )
+
+    train_sizes_kn, train_scores_kn, test_scores_kn = mv.make_learning_curve(
+        model_cls=knears_classifier,
+        df_new=df_new,
+        num_split_cv=settings.NUM_SPLIT_CV,
+        train_test_split_ratio=settings.TRAIN_TEST_SPLIT_RATIO,
+        train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
+    )
+
+    train_sizes_svc, train_scores_svc, test_scores_svc = mv.make_learning_curve(
+        model_cls=svc_classifier,
+        df_new=df_new,
+        num_split_cv=settings.NUM_SPLIT_CV,
+        train_test_split_ratio=settings.TRAIN_TEST_SPLIT_RATIO,
+        train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
+    )
+    train_sizes_tree, train_scores_tree, test_scores_tree = mv.make_learning_curve(
+        model_cls=tree_classifier,
+        df_new=df_new,
+        num_split_cv=settings.NUM_SPLIT_CV,
+        train_test_split_ratio=settings.TRAIN_TEST_SPLIT_RATIO,
+        train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
+    )
+
     time_end = time.time()
     print(f"Total running time: {time_end - time_start}")
 

@@ -17,4 +17,4 @@ def make_classifier_with_grid_search(X_train, y_train, classifier_name, classifi
     classifier_search.fit(X_train, y_train)
     classifier_best_params = classifier_search.best_params_
 
-    return classifier_best_params
+    return classifier_best_params, classifier_search
