@@ -189,6 +189,31 @@ def main():
         train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
     )
 
+    lr_train_score_mean, lr_train_score_std, lr_test_score_mean, lr_test_score_std = \
+        mv.calculate_mean_std_of_scores(
+            model_train_score=train_scores_lr,
+            model_test_score=test_scores_lr
+        )
+    kn_train_score_mean, kn_train_score_std, kn_test_score_mean, kn_test_score_std = \
+        mv.calculate_mean_std_of_scores(
+            model_train_score=train_scores_kn,
+            model_test_score=test_scores_kn
+        )
+    svc_train_score_mean, svc_train_score_std, svc_test_score_mean, svc_test_score_std = \
+        mv.calculate_mean_std_of_scores(
+            model_train_score=train_scores_svc,
+            model_test_score=test_scores_svc
+        )
+    tree_train_score_mean, tree_train_score_std, tree_test_score_mean, tree_test_score_std = \
+        mv.calculate_mean_std_of_scores(
+            model_train_score=train_scores_tree,
+            model_test_score=test_scores_tree
+        )
+    # print(lr_train_score_mean)
+    # print(lr_train_score_std)
+    # print(lr_test_score_mean)
+    # print(lr_test_score_std)
+
     time_end = time.time()
     print(f"Total running time: {time_end - time_start}")
 
