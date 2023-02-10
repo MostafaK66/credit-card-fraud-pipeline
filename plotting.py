@@ -146,4 +146,84 @@ def plot_scatter_dim_reduction(X_reduced_tsne, X_reduced_pca, X_reduced_truncate
     plt.savefig(os.path.join(output_path, "scatter_dim_reduc.png"))
 
 
+def plot_learning_curve(
+        train_size_lr, lr_train_score_mean, lr_train_score_std, lr_test_score_mean, lr_test_score_std,
+        train_size_kn, kn_train_score_mean, kn_train_score_std, kn_test_score_mean, kn_test_score_std,
+        train_size_svc, svc_train_score_mean, svc_train_score_std, svc_test_score_mean, svc_test_score_std,
+        train_size_tree, tree_train_score_mean, tree_train_score_std, tree_test_score_mean, tree_test_score_std,
+        output_path, ylim=None
+
+
+):
+
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(20, 14), sharey=True)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    ax1.fill_between(
+        train_size_lr, lr_train_score_mean - lr_train_score_std, lr_train_score_mean + lr_train_score_std, alpha=0.1,
+        color="#ff9124"
+    )
+    ax1.fill_between(
+        train_size_lr, lr_test_score_mean - lr_test_score_std, lr_test_score_mean + lr_test_score_std, alpha=0.1,
+        color="#2492ff"
+    )
+    ax1.plot(train_size_lr, lr_train_score_mean, "o-", color="#ff9124", label="Training score")
+    ax1.plot(train_size_lr, lr_test_score_mean, "o-", color="#ff9124", label="Cross-validation score")
+    ax1.set_title("Logistic Regression Learning Curve", fontsize=14)
+    ax1.set_xlabel('Training size (m)')
+    ax1.set_ylabel('Score')
+    ax1.grid(True)
+    ax1.legend(loc="best")
+
+    ax2.fill_between(
+        train_size_kn, kn_train_score_mean - kn_train_score_std, kn_train_score_mean + kn_train_score_std, alpha=0.1,
+        color="#ff9124"
+    )
+    ax2.fill_between(
+        train_size_kn, kn_test_score_mean - kn_test_score_std, kn_test_score_mean + kn_test_score_std, alpha=0.1,
+        color="#2492ff"
+    )
+    ax2.plot(train_size_kn, kn_train_score_mean, "o-", color="#ff9124", label="Training score")
+    ax2.plot(train_size_kn, kn_test_score_mean, "o-", color="#ff9124", label="Cross-validation score")
+    ax2.set_title("Knears Neighbors Learning Curve", fontsize=14)
+    ax2.set_xlabel('Training size (m)')
+    ax2.set_ylabel('Score')
+    ax2.grid(True)
+    ax2.legend(loc="best")
+
+    ax3.fill_between(
+        train_size_svc, svc_train_score_mean - svc_train_score_std, svc_train_score_mean + svc_train_score_std, alpha=0.1,
+        color="#ff9124"
+    )
+    ax3.fill_between(
+        train_size_svc, svc_test_score_mean - svc_test_score_std, svc_test_score_mean + svc_test_score_std, alpha=0.1,
+        color="#2492ff"
+    )
+    ax3.plot(train_size_kn, kn_train_score_mean, "o-", color="#ff9124", label="Training score")
+    ax3.plot(train_size_kn, kn_test_score_mean, "o-", color="#ff9124", label="Cross-validation score")
+    ax3.set_title("Support Vector Classifier \n Learning Curve", fontsize=14)
+    ax3.set_xlabel('Training size (m)')
+    ax3.set_ylabel('Score')
+    ax3.grid(True)
+    ax3.legend(loc="best")
+
+    ax4.fill_between(
+        train_size_tree, tree_train_score_mean - tree_train_score_std, tree_train_score_mean + tree_train_score_std,
+        alpha=0.1,
+        color="#ff9124"
+    )
+    ax4.fill_between(
+        train_size_tree, tree_test_score_mean - tree_test_score_std, tree_test_score_mean + tree_test_score_std,
+        alpha=0.1, color="#2492ff"
+    )
+    ax4.plot(train_size_kn, kn_train_score_mean, "o-", color="#ff9124", label="Training score")
+    ax4.plot(train_size_kn, kn_test_score_mean, "o-", color="#ff9124", label="Cross-validation score")
+    ax4.set_title("Decision Tree Classifier \n Learning Curve", fontsize=14)
+    ax4.set_xlabel('Training size (m)')
+    ax4.set_ylabel('Score')
+    ax4.grid(True)
+    ax4.legend(loc="best")
+
+    plt.savefig(os.path.join(output_path, "learning_curve.png"))
+
 

@@ -158,7 +158,7 @@ def main():
             df=df,
             stratified_splits=settings.STRATIFIED_SPLITS
         )
-    train_sizes_lr, train_scores_lr, test_scores_lr = mv.make_learning_curve(
+    train_size_lr, train_scores_lr, test_scores_lr = mv.make_learning_curve(
         model_cls=log_classifier,
         df_new=df_new,
         num_split_cv=settings.NUM_SPLIT_CV,
@@ -166,7 +166,7 @@ def main():
         train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
     )
 
-    train_sizes_kn, train_scores_kn, test_scores_kn = mv.make_learning_curve(
+    train_size_kn, train_scores_kn, test_scores_kn = mv.make_learning_curve(
         model_cls=knears_classifier,
         df_new=df_new,
         num_split_cv=settings.NUM_SPLIT_CV,
@@ -174,14 +174,14 @@ def main():
         train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
     )
 
-    train_sizes_svc, train_scores_svc, test_scores_svc = mv.make_learning_curve(
+    train_size_svc, train_scores_svc, test_scores_svc = mv.make_learning_curve(
         model_cls=svc_classifier,
         df_new=df_new,
         num_split_cv=settings.NUM_SPLIT_CV,
         train_test_split_ratio=settings.TRAIN_TEST_SPLIT_RATIO,
         train_sizes_learning_curve=settings.TRAIN_SIZES_LEARNING_CURVE
     )
-    train_sizes_tree, train_scores_tree, test_scores_tree = mv.make_learning_curve(
+    train_size_tree, train_scores_tree, test_scores_tree = mv.make_learning_curve(
         model_cls=tree_classifier,
         df_new=df_new,
         num_split_cv=settings.NUM_SPLIT_CV,
@@ -209,6 +209,19 @@ def main():
             model_train_score=train_scores_tree,
             model_test_score=test_scores_tree
         )
+    plotting.plot_learning_curve(
+        train_size_lr=train_size_lr, lr_train_score_mean=lr_train_score_mean, lr_train_score_std=lr_train_score_std,
+        lr_test_score_mean=lr_test_score_mean, lr_test_score_std=lr_test_score_std,
+        train_size_kn=train_size_kn, kn_train_score_mean=kn_train_score_mean, kn_train_score_std=kn_train_score_std,
+        kn_test_score_mean=kn_test_score_mean, kn_test_score_std=kn_test_score_std,
+        train_size_svc=train_size_svc, svc_train_score_mean=svc_train_score_mean,
+        svc_train_score_std=svc_train_score_std, svc_test_score_mean=svc_test_score_mean,
+        svc_test_score_std=svc_test_score_std,
+        train_size_tree=train_size_tree, tree_train_score_mean=tree_train_score_mean,
+        tree_train_score_std=tree_train_score_std, tree_test_score_mean=tree_test_score_mean,
+        tree_test_score_std=tree_test_score_std,
+        output_path=settings.OUT_PUT_PATH, ylim=None
+    )
     # print(lr_train_score_mean)
     # print(lr_train_score_std)
     # print(lr_test_score_mean)
