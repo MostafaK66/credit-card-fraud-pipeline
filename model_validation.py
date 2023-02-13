@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import ShuffleSplit
+from sklearn.model_selection import cross_val_predict
 
 
 def make_learning_curve(model_cls, df_new, num_split_cv, train_test_split_ratio, train_sizes_learning_curve):
@@ -23,6 +24,12 @@ def calculate_mean_std_of_scores(model_train_score, model_test_score):
     model_test_score_std = np.std(model_test_score, axis=1)
 
     return model_train_score_mean, model_train_score_std, model_test_score_mean, model_test_score_std
+
+
+def calculate_cross_val_predict(model_name, X_train, y_train, cv, method):
+    model_predicted_values = cross_val_predict(estimator=model_name, X=X_train, y=y_train, cv=cv, method=method)
+
+    return model_predicted_values
 
 
 

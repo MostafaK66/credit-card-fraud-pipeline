@@ -33,3 +33,4 @@ tree_params = {"criterion": ["gini", "entropy"], "max_depth": list(range(2, 4, 1
 NUM_SPLIT_CV = 100
 TRAIN_SIZES_LEARNING_CURVE = np.linspace(0.1, 1.0, 5)
 print(TRAIN_SIZES_LEARNING_CURVE)
+CROSS_VAL_METHOD = "decision_function"

@@ -222,7 +222,35 @@ def main():
         tree_test_score_std=tree_test_score_std,
         output_path=settings.OUT_PUT_PATH, ylim=None
     )
-    # print(lr_train_score_mean)
+    log_reg_pred = mv.calculate_cross_val_predict(
+        model_name=log_classifier,
+        X_train=under_sample_train_X,
+        y_train=under_sample_train_y,
+        cv=settings.NUM_CROSS_VAL,
+        method=settings.CROSS_VAL_METHOD
+    )
+    knears_reg_pred = mv.calculate_cross_val_predict(
+        model_name=knears_classifier,
+        X_train=under_sample_train_X,
+        y_train=under_sample_train_y,
+        cv=settings.NUM_CROSS_VAL,
+        method="predict"
+    )
+    svc_reg_pred = mv.calculate_cross_val_predict(
+        model_name=svc_classifier,
+        X_train=under_sample_train_X,
+        y_train=under_sample_train_y,
+        cv=settings.NUM_CROSS_VAL,
+        method=settings.CROSS_VAL_METHOD
+    )
+    tree_reg_pred = mv.calculate_cross_val_predict(
+        model_name=tree_classifier,
+        X_train=under_sample_train_X,
+        y_train=under_sample_train_y,
+        cv=settings.NUM_CROSS_VAL,
+        method=settings.CROSS_VAL_METHOD
+    )
+    print(knears_reg_pred)
     # print(lr_train_score_std)
     # print(lr_test_score_mean)
     # print(lr_test_score_std)
