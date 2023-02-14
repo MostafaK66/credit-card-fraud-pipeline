@@ -248,12 +248,40 @@ def main():
         X_train=under_sample_train_X,
         y_train=under_sample_train_y,
         cv=settings.NUM_CROSS_VAL,
-        method=settings.CROSS_VAL_METHOD
+        method="predict"
     )
-    print(knears_reg_pred)
-    # print(lr_train_score_std)
-    # print(lr_test_score_mean)
-    # print(lr_test_score_std)
+    log_fbr, log_tpr, log_threshold = mv.calculate_roc_auc_score(
+        model_prediction=log_reg_pred,
+        y_train=under_sample_train_y,
+        name_of_model="Logistic Regression Classifier"
+    )
+    knn_fbr, knn_tpr, knn_threshold = mv.calculate_roc_auc_score(
+        model_prediction=knears_reg_pred,
+        y_train=under_sample_train_y,
+        name_of_model="KNears Classifier"
+    )
+    svc_fbr, svc_tpr, svc_threshold = mv.calculate_roc_auc_score(
+        model_prediction=svc_reg_pred,
+        y_train=under_sample_train_y,
+        name_of_model="Support Vector Classifier"
+    )
+    tree_fbr, tree_tpr, tree_threshold = mv.calculate_roc_auc_score(
+        model_prediction=tree_reg_pred,
+        y_train=under_sample_train_y,
+        name_of_model="Decision Tree Classifier"
+    )
+    plotting.plot_roc_curve_all_models(
+        log_fbr=log_fbr,
+        log_tpr=log_tpr,
+        knn_fbr=knn_fbr,
+        knn_tpr=knn_tpr,
+        svc_fbr=svc_fbr,
+        svc_tpr=svc_tpr,
+        tree_fbr=tree_fbr,
+        tree_tpr=tree_tpr,
+        output_path=settings.OUT_PUT_PATH
+    )
+
 
     time_end = time.time()
     print(f"Total running time: {time_end - time_start}")

@@ -227,3 +227,18 @@ def plot_learning_curve(
     plt.savefig(os.path.join(output_path, "learning_curve.png"))
 
 
+def plot_roc_curve_all_models(log_fbr, log_tpr, knn_fbr, knn_tpr, svc_fbr, svc_tpr, tree_fbr, tree_tpr, output_path):
+    plt.figure(figsize=(16, 8))
+    plt.title("ROC Curve \n Top 4 Classifiers", fontsize=18)
+    plt.plot(log_fbr, log_tpr, label="Logistic Regression")
+    plt.plot(knn_fbr, knn_tpr, label="KNears Neighbors")
+    plt.plot(svc_fbr, svc_tpr, label="Support Vector")
+    plt.plot(tree_fbr, tree_tpr, label="Decision Tree")
+    plt.plot([0, 1], [0, 1], "k--")
+    plt.axis([-0.01, 1, 0, 1])
+    plt.xlabel('False Positive Rate', fontsize=16)
+    plt.ylabel('True Positive Rate', fontsize=16)
+    plt.legend()
+
+    plt.savefig(os.path.join(output_path, "roc_curve_all_models.png"))
+

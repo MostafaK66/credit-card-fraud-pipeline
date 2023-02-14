@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import ShuffleSplit
 from sklearn.model_selection import cross_val_predict
+from sklearn.metrics import roc_auc_score, roc_curve
 
 
 def make_learning_curve(model_cls, df_new, num_split_cv, train_test_split_ratio, train_sizes_learning_curve):
@@ -31,5 +32,11 @@ def calculate_cross_val_predict(model_name, X_train, y_train, cv, method):
 
     return model_predicted_values
 
+
+def calculate_roc_auc_score(model_prediction, y_train, name_of_model):
+    model_fbr, model_tpr, model_threshold = roc_curve(y_true=y_train, y_score=model_prediction)
+    print(name_of_model, roc_auc_score(y_true=y_train, y_score=model_prediction))
+
+    return model_fbr, model_tpr, model_threshold
 
 
