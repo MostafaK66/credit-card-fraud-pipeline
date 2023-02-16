@@ -281,6 +281,13 @@ def main():
     #     tree_tpr=tree_tpr,
     #     output_path=settings.OUT_PUT_PATH
     # )
+    log_precision, log_recall = mv.calculate_precision_recall_log_reg(
+        y_test=y_test,
+        X_test=X_test,
+        log_classifier=log_classifier
+    )
+    print(log_precision)
+    print(log_recall)
 
     time_end = time.time()
     print(f"Total running time: {time_end - time_start}")

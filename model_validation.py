@@ -3,10 +3,11 @@ from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.model_selection import ShuffleSplit
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import learning_curve
+from sklearn.metrics import precision_recall_curve
 
 
 def make_learning_curve(model_cls, df_new, num_split_cv, train_test_split_ratio, train_sizes_learning_curve):
-    #TODO: Remove slicing
+    # TODO: Remove slicing
     df_new = df_new.iloc[0:1000, :]
     X = df_new.drop("Class", axis=1)
     y = df_new["Class"]
@@ -40,3 +41,8 @@ def calculate_roc_auc_score(model_prediction, y_train, name_of_model):
     return model_fbr, model_tpr, model_threshold
 
 
+def calculate_precision_recall_log_reg(y_test, X_test, log_classifier):
+    under_sample_y_score = log_classifier.decision_function(X_test)
+    log_precision, log_recall, _ = precision_recall_curve(y_test, under_sample_y_score)
+
+    return log_precision, log_recall

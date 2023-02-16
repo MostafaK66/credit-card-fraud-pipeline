@@ -7,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-#TODO:Revert changes on parameters
+# TODO:Revert changes on parameters
 PATH_TO_READ_DATA = "/Users/mostafa_mac/Desktop/kaggle_datasets/creditcard.csv"
 OUT_PUT_PATH = os.path.join(os.getcwd(), "output")
 STRATIFIED_SPLITS = 5
