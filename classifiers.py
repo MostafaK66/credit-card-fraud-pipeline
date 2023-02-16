@@ -1,5 +1,5 @@
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import cross_val_score
 
 
 def make_base_fraud_detector_classifiers(dict_classifiers, X_train, y_train, num_cross_val):

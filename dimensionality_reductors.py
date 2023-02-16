@@ -1,6 +1,7 @@
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA, TruncatedSVD
 import time
+
+from sklearn.decomposition import PCA, TruncatedSVD
+from sklearn.manifold import TSNE
 
 
 def make_tsne_dim_reductor(df_new, n_components):
@@ -34,6 +35,3 @@ def make_truncated_svd_dim_reductor(df_new, n_components, svd_algorithm):
     print("Truncated_SGD took {:.2}s".format(time_end - time_start))
 
     return X_reduced_truncated_svd
-
-
-

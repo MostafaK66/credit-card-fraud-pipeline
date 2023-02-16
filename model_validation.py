@@ -1,8 +1,8 @@
 import numpy as np
-from sklearn.model_selection import learning_curve
+from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.model_selection import ShuffleSplit
 from sklearn.model_selection import cross_val_predict
-from sklearn.metrics import roc_auc_score, roc_curve
+from sklearn.model_selection import learning_curve
 
 
 def make_learning_curve(model_cls, df_new, num_split_cv, train_test_split_ratio, train_sizes_learning_curve):

@@ -1,7 +1,8 @@
+import os
+
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import seaborn as sns
-import matplotlib.patches as mpatches
-import os
 
 
 def plot_amount_and_time_distribution(amount_val, time_val, output_path, plot_title):
@@ -153,9 +154,7 @@ def plot_learning_curve(
         train_size_tree, tree_train_score_mean, tree_train_score_std, tree_test_score_mean, tree_test_score_std,
         output_path, ylim=None
 
-
 ):
-
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(20, 14), sharey=True)
     if ylim is not None:
         plt.ylim(*ylim)
@@ -192,7 +191,8 @@ def plot_learning_curve(
     ax2.legend(loc="best")
 
     ax3.fill_between(
-        train_size_svc, svc_train_score_mean - svc_train_score_std, svc_train_score_mean + svc_train_score_std, alpha=0.1,
+        train_size_svc, svc_train_score_mean - svc_train_score_std, svc_train_score_mean + svc_train_score_std,
+        alpha=0.1,
         color="#ff9124"
     )
     ax3.fill_between(
@@ -241,4 +241,3 @@ def plot_roc_curve_all_models(log_fbr, log_tpr, knn_fbr, knn_tpr, svc_fbr, svc_t
     plt.legend()
 
     plt.savefig(os.path.join(output_path, "roc_curve_all_models.png"))
-
