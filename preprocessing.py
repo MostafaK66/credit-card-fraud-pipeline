@@ -1,11 +1,15 @@
 import numpy as np
 import pandas as pd
+from dtype_diet import optimize_dtypes, report_on_dataframe
 from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.preprocessing import RobustScaler
 
 
 def read_data_as_data_frame(path_to_read_data):
-    df = pd.read_csv(path_to_read_data)
+    df_big = pd.read_csv(path_to_read_data)
+    proposed_df = report_on_dataframe(df_big, unit="MB")
+    df = optimize_dtypes(df_big, proposed_df)
+
     print(
         "No Fraud",
         round(df["Class"].value_counts()[0] / len(df) * 100, 2),
@@ -15,7 +19,6 @@ def read_data_as_data_frame(path_to_read_data):
     print(
         "Fraud", round(df["Class"].value_counts()[1] / len(df) * 100, 2), "% of dataset"
     )
-    # df = df.iloc[0:1000, :]
 
     return df
 

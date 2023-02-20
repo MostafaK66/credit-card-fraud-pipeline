@@ -11,7 +11,7 @@ import plotting
 import preprocessing
 import settings
 
-heartrate.trace(mv, browser=True)
+heartrate.trace(mv, browser=False)
 
 
 warnings.filterwarnings("ignore")
