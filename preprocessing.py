@@ -1,14 +1,20 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.preprocessing import RobustScaler
 
 
 def read_data_as_data_frame(path_to_read_data):
     df = pd.read_csv(path_to_read_data)
-    print("No Fraud", round(df["Class"].value_counts()[0] / len(df) * 100, 2), "% of dataset")
-    print("Fraud", round(df["Class"].value_counts()[1] / len(df) * 100, 2), "% of dataset")
+    print(
+        "No Fraud",
+        round(df["Class"].value_counts()[0] / len(df) * 100, 2),
+        "% of dataset",
+    )
+
+    print(
+        "Fraud", round(df["Class"].value_counts()[1] / len(df) * 100, 2), "% of dataset"
+    )
     # df = df.iloc[0:1000, :]
 
     return df
@@ -26,7 +32,7 @@ def drop_unnecessary_columns(df):
     df.drop(["Time", "Amount"], axis=1, inplace=True)
     scaled_amount = df["scaled_amount"]
     scaled_time = df["scaled_time"]
-    df.drop(['scaled_amount', 'scaled_time'], axis=1, inplace=True)
+    df.drop(["scaled_amount", "scaled_time"], axis=1, inplace=True)
     df.insert(0, "scaled_amount", scaled_amount)
     df.insert(1, "scaled_time", scaled_time)
 
@@ -34,7 +40,9 @@ def drop_unnecessary_columns(df):
 
 
 def make_stratified_split(df, stratified_splits):
-    stratified_spliter = StratifiedKFold(n_splits=stratified_splits, random_state=None, shuffle=False)
+    stratified_spliter = StratifiedKFold(
+        n_splits=stratified_splits, random_state=None, shuffle=False
+    )
     X = df.drop("Class", axis=1)
     y = df["Class"]
 
@@ -47,7 +55,9 @@ def make_stratified_split(df, stratified_splits):
 
 
 def check_target_distribution(original_ytrain, original_ytest):
-    train_unique_label, train_counts_label = np.unique(original_ytrain, return_counts=True)
+    train_unique_label, train_counts_label = np.unique(
+        original_ytrain, return_counts=True
+    )
     test_unique_label, test_counts_label = np.unique(original_ytest, return_counts=True)
 
     print("Label Distribution: \n")
@@ -79,7 +89,9 @@ def make_outlier_removal(df_new, outlier_thre, column_name):
     V_lower, V_upper = q25 - V_cut_off, q75 + V_cut_off
     outliers_to_remove = [x for x in V_fraud if x < V_lower or x > V_upper]
 
-    df_new = df_new.drop(df_new[(df_new[column_name] > V_upper) | (df_new[column_name] < V_lower)].index)
+    df_new = df_new.drop(
+        df_new[(df_new[column_name] > V_upper) | (df_new[column_name] < V_lower)].index
+    )
 
     return df_new, outliers_to_remove
 
@@ -88,8 +100,15 @@ def make_train_and_test_split(df_new, train_test_split_ration):
     X = df_new.drop("Class", axis=1)
     y = df_new["Class"]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=train_test_split_ration, random_state=123)
-    X_train, X_test, y_train, y_test = X_train.values, X_test.values, y_train.values, y_test.values
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=train_test_split_ration, random_state=123
+    )
+    X_train, X_test, y_train, y_test = (
+        X_train.values,
+        X_test.values,
+        y_train.values,
+        y_test.values,
+    )
 
     return X_train, X_test, y_train, y_test
 
@@ -97,13 +116,26 @@ def make_train_and_test_split(df_new, train_test_split_ration):
 def make_train_test_split_main_df(df, stratified_splits):
     under_sample_X = df.drop("Class", axis=1)
     under_sample_y = df["Class"]
-    stratified_spliter = StratifiedKFold(n_splits=stratified_splits, random_state=None, shuffle=False)
+    stratified_spliter = StratifiedKFold(
+        n_splits=stratified_splits, random_state=None, shuffle=False
+    )
 
-    for train_index, test_index in stratified_spliter.split(under_sample_X, under_sample_y):
+    for train_index, test_index in stratified_spliter.split(
+        under_sample_X, under_sample_y
+    ):
         print("Train:", train_index, "Test:", test_index)
-        under_sample_train_X, under_sample_test_X = under_sample_X.iloc[train_index].values, \
-                                                    under_sample_X.iloc[test_index].values
-        under_sample_train_y, under_sample_test_y = under_sample_y.iloc[train_index].values, \
-                                                    under_sample_y.iloc[test_index].values
+        under_sample_train_X, under_sample_test_X = (
+            under_sample_X.iloc[train_index].values,
+            under_sample_X.iloc[test_index].values,
+        )
+        under_sample_train_y, under_sample_test_y = (
+            under_sample_y.iloc[train_index].values,
+            under_sample_y.iloc[test_index].values,
+        )
 
-        return under_sample_train_X, under_sample_test_X, under_sample_train_y, under_sample_test_y
+        return (
+            under_sample_train_X,
+            under_sample_test_X,
+            under_sample_train_y,
+            under_sample_test_y,
+        )
