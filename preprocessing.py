@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from dtype_diet import optimize_dtypes, report_on_dataframe
+from imblearn.over_sampling import SMOTE
+from imblearn.pipeline import make_pipeline as imbalanced_make_pipeline
 from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.preprocessing import RobustScaler
 
@@ -54,7 +56,13 @@ def make_stratified_split(df, stratified_splits):
         original_Xtrain, original_Xtest = X.iloc[train_index], X.iloc[test_index]
         original_ytrain, original_ytest = y.iloc[train_index], y.iloc[test_index]
 
-    return original_Xtrain, original_Xtest, original_ytrain, original_ytest
+    return (
+        original_Xtrain,
+        original_Xtest,
+        original_ytrain,
+        original_ytest,
+        stratified_spliter,
+    )
 
 
 def check_target_distribution(original_ytrain, original_ytest):
@@ -142,3 +150,29 @@ def make_train_test_split_main_df(df, stratified_splits):
             under_sample_train_y,
             under_sample_test_y,
         )
+
+
+def make_smote_sampling(
+    original_Xtrain, original_ytrain, stratified_spliter, rand_log_reg
+):
+    original_Xtrain = original_Xtrain.values
+    original_ytrain = original_ytrain.values
+    for train_index, test_index in stratified_spliter.split(
+        original_Xtrain, original_ytrain
+    ):
+        pipline_smote = imbalanced_make_pipeline(SMOTE, rand_log_reg)
+        smote_log_reg = pipline_smote.fit(
+            X=original_Xtrain[train_index], y=original_ytrain[train_index]
+        )
+        print("smt")
+
+        return pipline_smote, smote_log_reg
+
+
+""""
+original_Xtrain,
+        original_Xtest,
+        original_ytrain,
+        original_ytest,
+
+"""

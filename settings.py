@@ -16,7 +16,7 @@ OUTLIER_THRE = 1.5
 NUM_COMPONENTS = 2
 SVD_ALGORITHM = "randomized"
 TRAIN_TEST_SPLIT_RATIO = 0.3
-dict_classifiers = {
+DICT_CLASSIFIERS = {
     "LogisticRegression": LogisticRegression(),
     "KNearest": KNeighborsClassifier(),
     "SupportVectorClassifier": SVC(),
@@ -25,12 +25,12 @@ dict_classifiers = {
 }
 NUM_CROSS_VAL = 5
 # log_reg_params = {"penalty": ["l1", "l2"], "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]}
-log_reg_params = {"penalty": ["l1", "l2"], "C": [0.001]}
+LOG_REG_PARAMS = {"penalty": ["l1", "l2"], "C": [0.001]}
 # knears_params = {"n_neighbors": list(range(2, 5, 1)), 'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']}
-knears_params = {"n_neighbors": list(range(2, 5, 1)), "algorithm": ["auto"]}
+KNEARS_PARAMS = {"n_neighbors": list(range(2, 5, 1)), "algorithm": ["auto"]}
 # svc_params = {'C': [0.5, 0.7, 0.9, 1], 'kernel': ['rbf', 'poly', 'sigmoid', 'linear']}
-svc_params = {"C": [0.5], "kernel": ["rbf"]}
-tree_params = {
+SVC_PARAMS = {"C": [0.5], "kernel": ["rbf"]}
+TREE_PARAMS = {
     "criterion": ["gini", "entropy"],
     "max_depth": list(range(2, 4, 1)),
     "min_samples_leaf": list(range(5, 7, 1)),

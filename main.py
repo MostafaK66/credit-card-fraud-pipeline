@@ -3,6 +3,7 @@ import warnings
 
 import heartrate
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import RandomizedSearchCV
 
 import classifiers
 import dimensionality_reductors as dim_reduct
@@ -42,6 +43,7 @@ def main():
         original_Xtest,
         original_ytrain,
         original_ytest,
+        stratified_spliter,
     ) = preprocessing.make_stratified_split(
         df=df, stratified_splits=settings.STRATIFIED_SPLITS
     )
@@ -100,7 +102,7 @@ def main():
         df_new=df_new, train_test_split_ration=settings.TRAIN_TEST_SPLIT_RATIO
     )
     classifiers.make_base_fraud_detector_classifiers(
-        dict_classifiers=settings.dict_classifiers,
+        dict_classifiers=settings.DICT_CLASSIFIERS,
         X_train=X_train,
         y_train=y_train,
         num_cross_val=settings.NUM_CROSS_VAL,
@@ -112,7 +114,7 @@ def main():
         X_train=X_train,
         y_train=y_train,
         classifier_name=LogisticRegression(),
-        classifier_params=settings.log_reg_params,
+        classifier_params=settings.LOG_REG_PARAMS,
     )
     # knears_classifier_params, knears_classifier = classifiers.make_classifier_with_grid_search(
     #     X_train=X_train,
@@ -273,8 +275,16 @@ def main():
     log_precision, log_recall = mv.calculate_precision_recall_log_reg(
         y_test=y_test, X_test=X_test, log_classifier=log_classifier
     )
-    print(log_precision)
-    print(log_recall)
+    pipline_smote, smote_log_reg = preprocessing.make_smote_sampling(
+        original_Xtrain=original_Xtrain,
+        original_ytrain=original_ytrain,
+        stratified_spliter=stratified_spliter,
+        rand_log_reg=RandomizedSearchCV(
+            estimator=LogisticRegression(),
+            param_distributions=settings.LOG_REG_PARAMS,
+            n_iter=settings.NUM_CROSS_VAL,
+        ),
+    )
 
     time_end = time.time()
     print(f"Total running time: {time_end - time_start}")
