@@ -4,6 +4,7 @@ from dtype_diet import optimize_dtypes, report_on_dataframe
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import make_pipeline as imbalanced_make_pipeline
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import f1_score, precision_score, recall_score, roc_auc_score
 from sklearn.model_selection import (
     RandomizedSearchCV,
     StratifiedKFold,
@@ -181,3 +182,33 @@ def make_smote_sampling(
         best_model = rand_log_reg.best_estimator_
 
         return pipline_smote, smote_log_reg, best_model
+
+
+def compute_scores_for_smote(
+    best_model, pipline_smote, original_Xtrain, original_ytrain, stratified_spliter
+):
+
+    acc_smote = list()
+    precision_smote = list()
+    recall_smote = list()
+    f1_smote = list()
+    auc_smote = list()
+    original_Xtrain = original_Xtrain.values
+    original_ytrain = original_ytrain.values
+    for train_index, test_index in stratified_spliter.split(
+        original_Xtrain, original_ytrain
+    ):
+        prediction_smote = best_model.predict(original_Xtrain[test_index])
+        acc_smote.append(
+            pipline_smote.score(
+                original_Xtrain[test_index], original_ytrain[test_index]
+            )
+        )
+        precision_smote.append(
+            precision_score(original_ytrain[test_index], prediction_smote)
+        )
+        recall_smote.append(recall_score(original_ytrain[test_index], prediction_smote))
+        f1_smote.append(f1_score(original_ytrain[test_index], prediction_smote))
+        auc_smote.append(roc_auc_score(original_ytrain[test_index], prediction_smote))
+
+        return acc_smote, precision_smote, recall_smote, f1_smote, auc_smote

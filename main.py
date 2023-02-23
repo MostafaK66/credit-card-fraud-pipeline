@@ -3,7 +3,6 @@ import warnings
 
 import heartrate
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import RandomizedSearchCV
 
 import classifiers
 import dimensionality_reductors as dim_reduct
@@ -281,6 +280,20 @@ def main():
         stratified_spliter=stratified_spliter,
         log_reg_params=settings.LOG_REG_PARAMS,
         num_cross_val=settings.NUM_CROSS_VAL,
+    )
+
+    (
+        acc_smote,
+        precision_smote,
+        recall_smote,
+        f1_smote,
+        auc_smote,
+    ) = preprocessing.compute_scores_for_smote(
+        best_model=best_model,
+        pipline_smote=pipline_smote,
+        original_Xtrain=original_Xtrain,
+        original_ytrain=original_ytrain,
+        stratified_spliter=stratified_spliter,
     )
 
     time_end = time.time()
