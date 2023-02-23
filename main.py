@@ -275,15 +275,12 @@ def main():
     log_precision, log_recall = mv.calculate_precision_recall_log_reg(
         y_test=y_test, X_test=X_test, log_classifier=log_classifier
     )
-    pipline_smote, smote_log_reg = preprocessing.make_smote_sampling(
+    pipline_smote, smote_log_reg, best_model = preprocessing.make_smote_sampling(
         original_Xtrain=original_Xtrain,
         original_ytrain=original_ytrain,
         stratified_spliter=stratified_spliter,
-        rand_log_reg=RandomizedSearchCV(
-            estimator=LogisticRegression(),
-            param_distributions=settings.LOG_REG_PARAMS,
-            n_iter=settings.NUM_CROSS_VAL,
-        ),
+        log_reg_params=settings.LOG_REG_PARAMS,
+        num_cross_val=settings.NUM_CROSS_VAL,
     )
 
     time_end = time.time()

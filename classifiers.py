@@ -1,5 +1,4 @@
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, cross_val_score
+from sklearn.model_selection import GridSearchCV, cross_val_score
 
 
 def make_base_fraud_detector_classifiers(
@@ -28,7 +27,4 @@ def make_classifier_with_grid_search(
     return classifier_best_params, classifier_search
 
 
-# def make_randomized_search_cv(log_regressor, log_reg_params, num_cross_val):
-#     rand_log_reg = RandomizedSearchCV(log_regressor, log_reg_params, num_cross_val)
-#
-#     return rand_log_reg
+

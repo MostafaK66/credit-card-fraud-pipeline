@@ -3,8 +3,15 @@ import pandas as pd
 from dtype_diet import optimize_dtypes, report_on_dataframe
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import make_pipeline as imbalanced_make_pipeline
-from sklearn.model_selection import StratifiedKFold, train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import (
+    RandomizedSearchCV,
+    StratifiedKFold,
+    train_test_split,
+)
 from sklearn.preprocessing import RobustScaler
+
+import settings
 
 
 def read_data_as_data_frame(path_to_read_data):
@@ -153,26 +160,27 @@ def make_train_test_split_main_df(df, stratified_splits):
 
 
 def make_smote_sampling(
-    original_Xtrain, original_ytrain, stratified_spliter, rand_log_reg
+    original_Xtrain, original_ytrain, stratified_spliter, log_reg_params, num_cross_val
 ):
+
+    rand_log_reg = RandomizedSearchCV(
+        estimator=LogisticRegression(),
+        param_distributions=log_reg_params,
+        n_iter=num_cross_val,
+    )
+
     original_Xtrain = original_Xtrain.values
     original_ytrain = original_ytrain.values
     for train_index, test_index in stratified_spliter.split(
         original_Xtrain, original_ytrain
     ):
-        pipline_smote = imbalanced_make_pipeline(SMOTE, rand_log_reg)
+        pipline_smote = imbalanced_make_pipeline(SMOTE(), rand_log_reg)
         smote_log_reg = pipline_smote.fit(
             X=original_Xtrain[train_index], y=original_ytrain[train_index]
         )
-        print("smt")
+        best_model = rand_log_reg.best_estimator_
 
-        return pipline_smote, smote_log_reg
+        return pipline_smote, smote_log_reg, best_model
 
 
-""""
-original_Xtrain,
-        original_Xtest,
-        original_ytrain,
-        original_ytest,
 
-"""
