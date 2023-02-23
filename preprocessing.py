@@ -181,6 +181,3 @@ def make_smote_sampling(
         best_model = rand_log_reg.best_estimator_
 
         return pipline_smote, smote_log_reg, best_model
-
-
-

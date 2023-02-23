@@ -25,6 +25,3 @@ def make_classifier_with_grid_search(
     classifier_best_params = classifier_search.best_params_
 
     return classifier_best_params, classifier_search
-
-
-
