@@ -212,3 +212,14 @@ def compute_scores_for_smote(
         auc_smote.append(roc_auc_score(original_ytrain[test_index], prediction_smote))
 
         return acc_smote, precision_smote, recall_smote, f1_smote, auc_smote
+
+
+def print_smore_scores(acc_smote, precision_smote, recall_smote, f1_smote):
+    print("---" * 45)
+    print("")
+    print(f"Accuracy SMOTE: {np.mean(acc_smote)}")
+    print(f"Precision SMOTE: {np.mean(precision_smote)}")
+    print(f"Recall SMOTE: {np.mean(recall_smote)}")
+    print(f"f1-score SMOTE: {np.mean(f1_smote)}")
+
+    print("---" * 45)

@@ -24,12 +24,15 @@ DICT_CLASSIFIERS = {
     "RandomForestClassifier": RandomForestClassifier(),
 }
 NUM_CROSS_VAL = 5
-# log_reg_params = {"penalty": ["l1", "l2"], "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]}
 LOG_REG_PARAMS = {"penalty": ["l1", "l2"], "C": [0.001]}
-# knears_params = {"n_neighbors": list(range(2, 5, 1)), 'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']}
-KNEARS_PARAMS = {"n_neighbors": list(range(2, 5, 1)), "algorithm": ["auto"]}
-# svc_params = {'C': [0.5, 0.7, 0.9, 1], 'kernel': ['rbf', 'poly', 'sigmoid', 'linear']}
-SVC_PARAMS = {"C": [0.5], "kernel": ["rbf"]}
+# LOG_REG_PARAMS = {"penalty": ["l1", "l2"], "C": [0.001]}
+KNEARS_PARAMS = {
+    "n_neighbors": list(range(2, 5, 1)),
+    "algorithm": ["auto", "ball_tree", "kd_tree", "brute"],
+}
+# KNEARS_PARAMS = {"n_neighbors": list(range(2, 5, 1)), "algorithm": ["auto"]}
+SVC_PARAMS = {"C": [0.5], "kernel": ["rbf", "poly"]}
+# SVC_PARAMS = {"C": [0.5], "kernel": ["rbf"]}
 TREE_PARAMS = {
     "criterion": ["gini", "entropy"],
     "max_depth": list(range(2, 4, 1)),
