@@ -1,0 +1,10 @@
+# Repository map
+
+- `src/credit_fraud/config.py`: immutable validated TOML configuration.
+- `src/credit_fraud/data.py`: CSV loading and fraud-dataset schema validation.
+- `src/credit_fraud/modeling.py`: stratified split, fold-local sampling, tuning, metrics.
+- `src/credit_fraud/artifacts.py`: predictions, metrics, and safe model persistence.
+- `src/credit_fraud/service.py`: dependency-injected application orchestration.
+- `src/credit_fraud/cli.py`: thin command-line entry point.
+- `config.example.toml`: runnable configuration template.
+- `tests/`: deterministic offline unit and pipeline tests.

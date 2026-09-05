@@ -1,0 +1,23 @@
+[data]
+path = "data/creditcard.csv"
+label_column = "Class"
+amount_column = "Amount"
+time_column = "Time"
+
+[split]
+test_fraction = 0.2
+random_seed = 123
+
+[model]
+sampling = "smote"
+cv_splits = 5
+smote_neighbors = 5
+c_values = [0.01, 0.1, 1.0, 10.0]
+max_iterations = 1000
+decision_threshold = 0.5
+
+[output]
+directory = "outputs"
+predictions_file = "predictions.csv"
+metrics_file = "metrics.json"
+model_file = "fraud_detector.skops"
