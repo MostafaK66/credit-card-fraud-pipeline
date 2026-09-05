@@ -1,0 +1,9 @@
+Credit Card Fraud Pipeline
+Copyright (c) 2026 MostafaK66
+
+This repository is a maintained continuation of the original private
+`credit_fraud_detection` project by MostafaK66. The original project did not contain
+a license file; the owner has added the MIT License to this version.
+
+The application expects a user-supplied dataset. No payment data, third-party dataset,
+or trained model is distributed here. Dependencies retain their respective licenses.
